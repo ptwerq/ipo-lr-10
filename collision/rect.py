@@ -63,6 +63,7 @@ def isCollisionRect(rect1, rect2):
 
 
 
+
 def intersectionAreaRect(rect1, rect2):
     """
     Вычисляет площадь пересечения двух прямоугольников.
@@ -92,3 +93,51 @@ def intersectionAreaRect(rect1, rect2):
 
     # Площадь пересечения
     return x_overlap * y_overlap
+
+
+
+def intersectionAreaMultiRect(rectangles):
+    """
+    Вычисляет общую площадь пересечения всех прямоугольников.
+    rectangles: список списков [[(x1,y1),(x2,y2)], ...]
+    
+    Возвращает:
+        float — уникальная площадь пересечения всех прямоугольников.
+    
+    Вызывает RectCorrectError, если хотя бы один прямоугольник некорректный.
+    """
+    # Проверяем корректность каждого прямоугольника
+    for i, rect in enumerate(rectangles, 1):
+        if not isCorrectRect(rect):
+            raise RectCorrectError(f"{i}й прямоугольник некорректный")
+    
+    # Если нет прямоугольников или только один — площадь пересечения равна площади первого
+    if not rectangles:
+        return 0
+    if len(rectangles) == 1:
+        x1, y1 = rectangles[0][0]
+        x2, y2 = rectangles[0][1]
+        return (x2 - x1) * (y2 - y1)
+
+    # Используем "разрезание" прямоугольников по осям для подсчета уникальной площади
+    # Для простоты — начинаем с пересечения первого прямоугольника
+    intersect = rectangles[0]
+
+    for rect in rectangles[1:]:
+        # Вычисляем пересечение с текущим "intersect"
+        x_min = max(intersect[0][0], rect[0][0])
+        y_min = max(intersect[0][1], rect[0][1])
+        x_max = min(intersect[1][0], rect[1][0])
+        y_max = min(intersect[1][1], rect[1][1])
+
+        # Если нет пересечения — площадь 0
+        if x_min >= x_max or y_min >= y_max:
+            return 0
+
+        # Обновляем пересечение
+        intersect = [(x_min, y_min), (x_max, y_max)]
+
+    # Возвращаем площадь итогового пересечения всех прямоугольников
+    x_min, y_min = intersect[0]
+    x_max, y_max = intersect[1]
+    return (x_max - x_min) * (y_max - y_min)
