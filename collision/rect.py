@@ -60,3 +60,35 @@ def isCollisionRect(rect1, rect2):
     intersect_y = not (y1_max < y2_min or y2_max < y1_min)
 
     return intersect_x and intersect_y
+
+
+
+def intersectionAreaRect(rect1, rect2):
+    """
+    Вычисляет площадь пересечения двух прямоугольников.
+    rect1, rect2: списки из двух кортежей [(x1,y1),(x2,y2)]
+    
+    Возвращает:
+        float — площадь пересечения.
+        0 — если прямоугольники не пересекаются.
+    
+    Вызывает ValueError, если один из прямоугольников некорректный.
+    """
+    # Проверяем корректность прямоугольников
+    if not isCorrectRect(rect1):
+        raise ValueError("1й прямоугольник некорректный")
+    if not isCorrectRect(rect2):
+        raise ValueError("2й прямоугольник некорректный")
+    
+    # Распаковываем координаты
+    x1_min, y1_min = rect1[0]
+    x1_max, y1_max = rect1[1]
+    x2_min, y2_min = rect2[0]
+    x2_max, y2_max = rect2[1]
+
+    # Находим координаты пересечения
+    x_overlap = max(0, min(x1_max, x2_max) - max(x1_min, x2_min))
+    y_overlap = max(0, min(y1_max, y2_max) - max(y1_min, y2_min))
+
+    # Площадь пересечения
+    return x_overlap * y_overlap

@@ -1,3 +1,8 @@
-from .rect import isCorrectRect, isCollisionRect, RectCorrectError
+from .rect import (
+    isCorrectRect,
+    isCollisionRect,
+    intersectionAreaRect,
+    RectCorrectError
+)
 
-__all__ = ["isCorrectRect", "isCollisionRect", "RectCorrectError"]
+__all__ = ["isCorrectRect", "isCollisionRect", "intersectionAreaRect", "RectCorrectError"]
