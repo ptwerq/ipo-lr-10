@@ -101,11 +101,11 @@ incorrect_rectangles = [
     [(-3, 1), (9, 10)],
     [(3, 17), (13, 1)]  # Некорректный прямоугольник
 ]
+intersectionAreaMultiRect(incorrect_rectangles)  # Вызовет ошибку
 ```
 
 ___
 
 
-intersectionAreaMultiRect(incorrect_rectangles)  # Вызовет ошибку
 ## Задание 6
 Импортируйте все функции из пакета `collision` в файл `main.py` и приведите **примеры использования каждой функции**.
